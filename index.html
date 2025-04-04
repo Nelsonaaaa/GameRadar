@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameRadar - Explore Infinite Gaming Worlds</title>
+    <meta name="description" content="Discover thousands of curated online games, including action, shooting, puzzle and more. Start your gaming journey now!">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Particle effects -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <style>
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: rgb(209 213 219);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+        .nav-item:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .game-nav-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .game-nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, #0EA5E9, #EC4899);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .game-nav-item:hover::after {
+            width: 100%;
+        }
+        .game-nav-item.active {
+            color: white;
+            background: linear-gradient(to right, rgba(14, 165, 233, 0.1), rgba(236, 73, 153, 0.1));
+        }
+        .game-nav-item.active::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-[#1F2937] to-[#5B21B6] min-h-screen text-white">
+    <!-- Particle background -->
+    <div id="particles-js" class="fixed inset-0 -z-10"></div>
+
+    <main>
+        <!-- Hero section -->
+        <header class="container mx-auto px-4 py-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-[#0EA5E9] to-[#EC4899] text-transparent bg-clip-text">
+                Discover Amazing Games
+            </h1>
+            <p class="text-xl text-gray-300 mb-4">Thousands of curated games, start your gaming journey anytime, anywhere</p>
+        </header>
+
+        <!-- Game navigation bar -->
+        <nav class="container mx-auto px-4 mb-8">
+            <div class="bg-black/20 backdrop-blur-md rounded-xl p-2">
+                <div class="flex items-center justify-between gap-4">
+                    <!-- Left navigation items container -->
+                    <div class="flex items-center gap-4 flex-1">
+                        <!-- Left arrow -->
+                        <button id="navPrev" class="w-8 h-8 flex-none bg-black/30 hover:bg-black/50 rounded-lg flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10 transition-all opacity-0 group-hover:opacity-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+
+                        <!-- Navigation items scroll container -->
+                        <div class="overflow-hidden flex-1" style="max-width: calc(140px * 6 + 0.5rem * 5);">
+                            <div id="navContainer" class="flex items-center gap-2 transition-transform duration-300">
+                                <a href="./games/fps/index.html" class="game-nav-item active flex-none px-4 py-2 rounded-lg text-white flex items-center gap-2">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-red-500/20 to-red-500/10 rounded-lg flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                    </div>
+                                    <span>FPS</span>
+                                </a>
+                                <a href="./games/driving/index.html" class="game-nav-item flex-none px-4 py-2 rounded-lg text-gray-300 hover:text-white flex items-center gap-2">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500/20 to-blue-500/10 rounded-lg flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                        </svg>
+                                    </div>
+                                    <span>Driving</span>
+                                </a>
+                                <a href="./games/clicker/index.html" class="game-nav-item flex-none px-4 py-2 rounded-lg text-gray-300 hover:text-white flex items-center gap-2">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-green-500/20 to-green-500/10 rounded-lg flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+                                        </svg>
+                                    </div>
+                                    <span>Clicker</span>
+                                </a>
+                                <a href="./games/shooting/index.html" class="game-nav-item flex-none px-4 py-2 rounded-lg text-gray-300 hover:text-white flex items-center gap-2">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-yellow-500/20 to-yellow-500/10 rounded-lg flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                    </div>
+                                    <span>Shooting</span>
+                                </a>
+                                <a href="./games/horror/index.html" class="game-nav-item flex-none px-4 py-2 rounded-lg text-gray-300 hover:text-white flex items-center gap-2">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-purple-500/20 to-purple-500/10 rounded-lg flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253" />
+                                        </svg>
+                                    </div>
+                                    <span>Horror</span>
+                                </a>
+                                <a href="./games/2players/index.html" class="game-nav-item flex-none px-4 py-2 rounded-lg text-gray-300 hover:text-white flex items-center gap-2">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-pink-500/20 to-pink-500/10 rounded-lg flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                    </div>
+                                    <span>2 Players</span>
+                                </a>
+                                <a href="./games/action/index.html" class="game-nav-item flex-none px-4 py-2 rounded-lg text-gray-300 hover:text-white flex items-center gap-2">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-orange-500/20 to-orange-500/10 rounded-lg flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <span>Action</span>
+                                </a>
+                                <a href="./games/casual/index.html" class="game-nav-item flex-none px-4 py-2 rounded-lg text-gray-300 hover:text-white flex items-center gap-2">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-teal-500/20 to-teal-500/10 rounded-lg flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <span>Casual</span>
+                                </a>
+                                <a href="./games/sports/index.html" class="game-nav-item flex-none px-4 py-2 rounded-lg text-gray-300 hover:text-white flex items-center gap-2">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-emerald-500/20 to-emerald-500/10 rounded-lg flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                        </svg>
+                                    </div>
+                                    <span>Sports</span>
+                                </a>
+                                <a href="./games/adventure/index.html" class="game-nav-item flex-none px-4 py-2 rounded-lg text-gray-300 hover:text-white flex items-center gap-2">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-indigo-500/20 to-indigo-500/10 rounded-lg flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                                        </svg>
+                                    </div>
+                                    <span>Adventure</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Right arrow -->
+                        <button id="navNext" class="w-8 h-8 flex-none bg-black/30 hover:bg-black/50 rounded-lg flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10 transition-all opacity-0 group-hover:opacity-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Right search box -->
+                    <div class="relative">
+                        <input type="text" placeholder="Search games..." class="w-64 px-4 py-2 bg-white/5 rounded-lg border border-white/10 focus:border-[#0EA5E9] focus:outline-none focus:ring-2 focus:ring-[#0EA5E9]/20 transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- FPS Games -->
+        <section class="container mx-auto px-4 py-2">
+            <!-- Title bar -->
+            <div class="flex items-center gap-3 mb-2 px-12">
+                <div class="w-8 h-8 bg-gradient-to-br from-[#EC4899]/20 to-[#EC4899]/10 rounded-lg flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10">
+                    <!-- Reserved SVG icon position -->
+                    <div class="w-5 h-5"></div>
+                </div>
+                <h2 class="text-2xl font-bold bg-gradient-to-r from-[#EC4899] to-[#0EA5E9] text-transparent bg-clip-text">FPS Games</h2>
+            </div>
+
+            <!-- Games display area -->
+            <div class="relative px-12 group">
+                <!-- Left arrow -->
+                <button class="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-24 flex items-center justify-center bg-black/30 hover:bg-black/50 rounded-l-lg transition-all z-10 backdrop-blur-sm ring-1 ring-white/10 opacity-0 group-hover:opacity-100" onclick="scrollNewGames('left')">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                
+                <!-- Games container -->
+                <div class="overflow-hidden relative">
+                    <div id="newGamesContainer" class="flex gap-4 transition-transform duration-500 ease-out py-4 px-2">
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/fps/krunker.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#EC4899] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Krunker" alt="Krunker" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#EC4899] px-1">Krunker</h3>
+                                    <p class="text-sm text-gray-400 px-1">FPS • Multiplayer</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/fps/bullet-force.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#EC4899] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Bullet+Force" alt="Bullet Force" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#EC4899] px-1">Bullet Force</h3>
+                                    <p class="text-sm text-gray-400 px-1">FPS • Action</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/fps/shell-shockers.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#EC4899] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Shell+Shockers" alt="Shell Shockers" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#EC4899] px-1">Shell Shockers</h3>
+                                    <p class="text-sm text-gray-400 px-1">FPS • Fun</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/fps/pixel-warfare.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#EC4899] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Pixel+Warfare" alt="Pixel Warfare" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#EC4899] px-1">Pixel Warfare</h3>
+                                    <p class="text-sm text-gray-400 px-1">FPS • Pixel</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/fps/superhot.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#EC4899] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Superhot" alt="Superhot" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#EC4899] px-1">Superhot</h3>
+                                    <p class="text-sm text-gray-400 px-1">FPS • Time</p>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Additional 5 FPS game cards -->
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/fps/bank-heist.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#EC4899] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Bank+Heist" alt="Bank Heist" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#EC4899] px-1">Bank Heist</h3>
+                                    <p class="text-sm text-gray-400 px-1">FPS • Stealth</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/fps/crazy-pixel-apocalypse.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#EC4899] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Crazy+Pixel+Apocalypse" alt="Crazy Pixel Apocalypse" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#EC4899] px-1">Crazy Pixel Apocalypse</h3>
+                                    <p class="text-sm text-gray-400 px-1">FPS • Survival</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/fps/pixel-gun-3d.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#EC4899] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Pixel+Gun+3D" alt="Pixel Gun 3D" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#EC4899] px-1">Pixel Gun 3D</h3>
+                                    <p class="text-sm text-gray-400 px-1">FPS • Battle</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/fps/sniper-challenge.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#EC4899] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Sniper+Challenge" alt="Sniper Challenge" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#EC4899] px-1">Sniper Challenge</h3>
+                                    <p class="text-sm text-gray-400 px-1">FPS • Precision</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/fps/time-shooter-2.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#EC4899] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Time+Shooter+2" alt="Time Shooter 2" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#EC4899] px-1">Time Shooter 2</h3>
+                                    <p class="text-sm text-gray-400 px-1">FPS • Slow-mo</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right arrow -->
+                <button class="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-24 flex items-center justify-center bg-black/30 hover:bg-black/50 rounded-r-lg transition-all z-10 backdrop-blur-sm ring-1 ring-white/10 opacity-0 group-hover:opacity-100" onclick="scrollNewGames('right')">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- Driving Games -->
+        <section class="container mx-auto px-4 py-2">
+            <!-- Title bar -->
+            <div class="flex items-center gap-3 mb-2 px-12">
+                <div class="w-8 h-8 bg-gradient-to-br from-[#0EA5E9]/20 to-[#EC4899]/10 rounded-lg flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10">
+                    <!-- Reserved SVG icon position -->
+                    <div class="w-5 h-5"></div>
+                </div>
+                <h2 class="text-2xl font-bold bg-gradient-to-r from-[#0EA5E9] to-[#EC4899] text-transparent bg-clip-text">Driving Games</h2>
+            </div>
+
+            <!-- Games display area -->
+            <div class="relative px-12 group">
+                <!-- Left arrow -->
+                <button class="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-24 flex items-center justify-center bg-black/30 hover:bg-black/50 rounded-l-lg transition-all z-10 backdrop-blur-sm ring-1 ring-white/10 opacity-0 group-hover:opacity-100" onclick="scrollHotGames('left')">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                
+                <!-- Games container -->
+                <div class="overflow-hidden relative">
+                    <div id="hotGamesContainer" class="flex gap-4 transition-transform duration-500 ease-out py-4 px-2">
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/driving/madalin-stunt-cars-3.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Madalin+Stunt+Cars+3" alt="Madalin Stunt Cars 3" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Madalin Stunt Cars 3</h3>
+                                    <p class="text-sm text-gray-400 px-1">Driving • Racing</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/driving/drift-hunters.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Drift+Hunters" alt="Drift Hunters" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Drift Hunters</h3>
+                                    <p class="text-sm text-gray-400 px-1">Driving • Drift</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/driving/traffic-rider.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Traffic+Rider" alt="Traffic Rider" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Traffic Rider</h3>
+                                    <p class="text-sm text-gray-400 px-1">Driving • Motorcycle</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/driving/real-city-driving-2.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Real+City+Driving+2" alt="Real City Driving 2" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Real City Driving 2</h3>
+                                    <p class="text-sm text-gray-400 px-1">Driving • Simulation</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/driving/car-simulator-arena.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Car+Simulator+Arena" alt="Car Simulator Arena" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Car Simulator Arena</h3>
+                                    <p class="text-sm text-gray-400 px-1">Driving • Stunts</p>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Additional 5 Driving game cards -->
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/driving/city-driver.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=City+Driver" alt="City Driver" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">City Driver</h3>
+                                    <p class="text-sm text-gray-400 px-1">Driving • City</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/driving/rally-point-5.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Rally+Point+5" alt="Rally Point 5" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Rally Point 5</h3>
+                                    <p class="text-sm text-gray-400 px-1">Driving • Rally</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/driving/extreme-car-parking.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Extreme+Car+Parking" alt="Extreme Car Parking" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Extreme Car Parking</h3>
+                                    <p class="text-sm text-gray-400 px-1">Driving • Parking</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/driving/stunt-car-challenge-3.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Stunt+Car+Challenge+3" alt="Stunt Car Challenge 3" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Stunt Car Challenge 3</h3>
+                                    <p class="text-sm text-gray-400 px-1">Driving • Stunts</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/driving/master-rally.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Master+Rally" alt="Master Rally" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Master Rally</h3>
+                                    <p class="text-sm text-gray-400 px-1">Driving • Offroad</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right arrow -->
+                <button class="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-24 flex items-center justify-center bg-black/30 hover:bg-black/50 rounded-r-lg transition-all z-10 backdrop-blur-sm ring-1 ring-white/10 opacity-0 group-hover:opacity-100" onclick="scrollHotGames('right')">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- Casual Games -->
+        <section class="container mx-auto px-4 py-2">
+            <!-- Title bar -->
+            <div class="flex items-center gap-3 mb-2 px-12">
+                <div class="w-8 h-8 bg-gradient-to-br from-[#0EA5E9]/20 to-[#0EA5E9]/10 rounded-lg flex items-center justify-center backdrop-blur-sm ring-1 ring-white/10">
+                    <!-- Reserved SVG icon position -->
+                    <div class="w-5 h-5"></div>
+                </div>
+                <h2 class="text-2xl font-bold bg-gradient-to-r from-[#0EA5E9] to-[#EC4899] text-transparent bg-clip-text">Casual Games</h2>
+            </div>
+
+            <!-- Games display area -->
+            <div class="relative px-12 group">
+                <!-- Left arrow -->
+                <button class="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-24 flex items-center justify-center bg-black/30 hover:bg-black/50 rounded-l-lg transition-all z-10 backdrop-blur-sm ring-1 ring-white/10 opacity-0 group-hover:opacity-100" onclick="scrollGames('left')">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                
+                <!-- Games container -->
+                <div class="overflow-hidden relative">
+                    <div id="gamesContainer" class="flex gap-4 transition-transform duration-500 ease-out py-4 px-2">
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/casual/happy-wheels.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Happy+Wheels" alt="Happy Wheels" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Happy Wheels</h3>
+                                    <p class="text-sm text-gray-400 px-1">Casual • Physics</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/casual/bubble-tower-3d.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Bubble+Tower+3D" alt="Bubble Tower 3D" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Bubble Tower 3D</h3>
+                                    <p class="text-sm text-gray-400 px-1">Casual • Puzzle</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/casual/slope.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Slope" alt="Slope" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Slope</h3>
+                                    <p class="text-sm text-gray-400 px-1">Casual • Speed</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/casual/little-alchemy.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Little+Alchemy" alt="Little Alchemy" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Little Alchemy</h3>
+                                    <p class="text-sm text-gray-400 px-1">Casual • Creative</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/casual/eggy-car.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Eggy+Car" alt="Eggy Car" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Eggy Car</h3>
+                                    <p class="text-sm text-gray-400 px-1">Casual • Fun</p>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Additional 5 Casual game cards -->
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/casual/fruit-ninja.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Fruit+Ninja" alt="Fruit Ninja" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Fruit Ninja</h3>
+                                    <p class="text-sm text-gray-400 px-1">Casual • Slicing</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/casual/doodle-jump.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Doodle+Jump" alt="Doodle Jump" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Doodle Jump</h3>
+                                    <p class="text-sm text-gray-400 px-1">Casual • Platformer</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/casual/run-3.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Run+3" alt="Run 3" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Run 3</h3>
+                                    <p class="text-sm text-gray-400 px-1">Casual • Runner</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/casual/temple-run-2.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Temple+Run+2" alt="Temple Run 2" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Temple Run 2</h3>
+                                    <p class="text-sm text-gray-400 px-1">Casual • Adventure</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex-none w-[calc((100%-4rem)/5)]">
+                            <div class="group">
+                                <a href="./games/casual/candy-crush.html" class="block">
+                                    <div class="aspect-video bg-gray-800 rounded-lg mb-3 transform transition duration-300 group-hover:scale-105 group-hover:ring-2 ring-[#0EA5E9] overflow-hidden shadow-lg">
+                                        <img src="https://placehold.co/1600x900/1F2937/FFFFFF/png?text=Candy+Crush" alt="Candy Crush" class="w-full h-full object-cover">
+                                    </div>
+                                    <h3 class="font-semibold group-hover:text-[#0EA5E9] px-1">Candy Crush</h3>
+                                    <p class="text-sm text-gray-400 px-1">Casual • Match 3</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right arrow -->
+                <button class="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-24 flex items-center justify-center bg-black/30 hover:bg-black/50 rounded-r-lg transition-all z-10 backdrop-blur-sm ring-1 ring-white/10 opacity-0 group-hover:opacity-100" onclick="scrollGames('right')">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black/30 mt-12 py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="font-bold mb-4">About Us</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">About GameRadar</a></li>
+                        <li><a href="#" class="hover:text-white">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">Game Categories</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="./games/fps/index.html" class="hover:text-white">FPS Games</a></li>
+                        <li><a href="./games/shooting/index.html" class="hover:text-white">Shooting Games</a></li>
+                        <li><a href="./games/action/index.html" class="hover:text-white">Action Games</a></li>
+                        <li><a href="./games/adventure/index.html" class="hover:text-white">Adventure Games</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">More Categories</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="./games/clicker/index.html" class="hover:text-white">Clicker Games</a></li>
+                        <li><a href="./games/horror/index.html" class="hover:text-white">Horror Games</a></li>
+                        <li><a href="./games/2players/index.html" class="hover:text-white">2 Players Games</a></li>
+                        <li><a href="./games/casual/index.html" class="hover:text-white">Casual Games</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">Other Categories</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="./games/sports/index.html" class="hover:text-white">Sports Games</a></li>
+                        <li><a href="./games/driving/index.html" class="hover:text-white">Driving Games</a></li>
+                    </ul>
+                </div>
+                <!-- More footer content -->
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
+                <p>&copy; 2024 GameRadar. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 初始化粒子效果，添加鼠标交互
+        particlesJS("particles-js", {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: "#ffffff"
+                },
+                shape: {
+                    type: "circle"
+                },
+                opacity: {
+                    value: 0.2,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 2,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#ffffff",
+                    opacity: 0.1,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                    attract: {
+                        enable: true,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "repulse"
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: "push"
+                    },
+                    resize: true
+                },
+                modes: {
+                    repulse: {
+                        distance: 100,
+                        duration: 0.4
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+
+        let currentPosition = 0;
+        const container = document.getElementById('gamesContainer');
+        const itemWidth = container.children[0].offsetWidth + 16; // 16 is the gap
+        const visibleItems = 5;
+        const totalItems = container.children.length;
+        const maxPosition = (totalItems - visibleItems) * itemWidth;
+
+        function scrollGames(direction) {
+            if (direction === 'right' && currentPosition > -maxPosition) {
+                currentPosition -= itemWidth;
+            } else if (direction === 'left' && currentPosition < 0) {
+                currentPosition += itemWidth;
+            }
+            container.style.transform = `translateX(${currentPosition}px)`;
+        }
+
+        // 在页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            const navContainer = document.getElementById('navContainer');
+            const navPrev = document.getElementById('navPrev');
+            const navNext = document.getElementById('navNext');
+            let currentNavPosition = 0;
+            const navItemWidth = 140; // 每个导航项的大致宽度
+            const visibleNavItems = 6; // 一次显示6个导航项
+            const totalNavItems = navContainer.children.length;
+            const maxNavPosition = (totalNavItems - visibleNavItems) * navItemWidth;
+
+            // 更新导航箭头的显示状态
+            function updateNavArrows() {
+                navPrev.style.opacity = currentNavPosition < 0 ? '1' : '0';
+                navNext.style.opacity = currentNavPosition > -maxNavPosition ? '1' : '0';
+                navPrev.style.visibility = currentNavPosition < 0 ? 'visible' : 'hidden';
+                navNext.style.visibility = currentNavPosition > -maxNavPosition ? 'visible' : 'hidden';
+            }
+
+            // 滑动导航
+            function slideNav(direction) {
+                if (direction === 'right' && currentNavPosition > -maxNavPosition) {
+                    currentNavPosition -= navItemWidth;
+                } else if (direction === 'left' && currentNavPosition < 0) {
+                    currentNavPosition += navItemWidth;
+                }
+                navContainer.style.transform = `translateX(${currentNavPosition}px)`;
+                updateNavArrows();
+            }
+
+            // 添加点击事件监听器
+            navPrev.addEventListener('click', () => slideNav('left'));
+            navNext.addEventListener('click', () => slideNav('right'));
+
+            // 初始化箭头状态
+            updateNavArrows();
+        });
+
+        // 为FPS Games添加滚动函数
+        let newGamesPosition = 0;
+        const newGamesContainer = document.getElementById('newGamesContainer');
+        const newGamesItemWidth = newGamesContainer.children[0].offsetWidth + 16; // 16是间隙
+        const newGamesVisibleItems = 5;
+        const newGamesTotalItems = newGamesContainer.children.length;
+        const newGamesMaxPosition = (newGamesTotalItems - newGamesVisibleItems) * newGamesItemWidth;
+
+        function scrollNewGames(direction) {
+            if (direction === 'right' && newGamesPosition > -newGamesMaxPosition) {
+                newGamesPosition -= newGamesItemWidth;
+            } else if (direction === 'left' && newGamesPosition < 0) {
+                newGamesPosition += newGamesItemWidth;
+            }
+            newGamesContainer.style.transform = `translateX(${newGamesPosition}px)`;
+        }
+
+        // 为Driving Games添加滚动函数
+        let hotGamesPosition = 0;
+        const hotGamesContainer = document.getElementById('hotGamesContainer');
+        const hotGamesItemWidth = hotGamesContainer.children[0].offsetWidth + 16; // 16是间隙
+        const hotGamesVisibleItems = 5;
+        const hotGamesTotalItems = hotGamesContainer.children.length;
+        const hotGamesMaxPosition = (hotGamesTotalItems - hotGamesVisibleItems) * hotGamesItemWidth;
+
+        function scrollHotGames(direction) {
+            if (direction === 'right' && hotGamesPosition > -hotGamesMaxPosition) {
+                hotGamesPosition -= hotGamesItemWidth;
+            } else if (direction === 'left' && hotGamesPosition < 0) {
+                hotGamesPosition += hotGamesItemWidth;
+            }
+            hotGamesContainer.style.transform = `translateX(${hotGamesPosition}px)`;
+        }
+    </script>
+</body>
+</html> 

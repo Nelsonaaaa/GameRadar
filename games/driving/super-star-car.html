@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Star Car - GameVault</title>
+    <meta name="description" content="Super Star Car is all about speed, precision, and strategy as you race through an exciting career mode. Every time you finish a race in this mode, you’ll earn s...">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Super Star Car">
+    <meta property="og:description" content="Super Star Car is all about speed, precision, and strategy as you race through an exciting career mode. Every time you finish a race in this mode, you’ll earn stars and money, helping you climb the le...">
+    <meta property="og:image" content="">
+    <meta property="og:url" content="">
+    
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": "Super Star Car",
+        "description": "Super Star Car is all about speed, precision, and strategy as you race through an exciting career mode. Every time you finish a race in this mode, you’ll earn stars and money, helping you climb the leaderboard and unlock new opportunities. Use your winnings to upgrade your car strategically, boosting its performance and ensuring that every race feels fresh and thrilling.",
+        "genre": [&quot;Fully featured career mode&quot;, &quot;Several tracks to race on&quot;, &quot;Profile with detailed stats&quot;, &quot;In-car and 3rd-person views&quot;, &quot;Detailed 3D graphics&quot;],
+        "gamePlatform": "Web Browser",
+        "publisher": "GameVault",
+        "url": ""
+    }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-[#1F2937] to-[#5B21B6] min-h-screen text-white">
+    <!-- 粒子背景 -->
+    <div id="particles-js" class="fixed inset-0 -z-10"></div>
+
+    <!-- 导航栏 -->
+    <nav class="bg-black/30 backdrop-blur-md sticky top-0 z-50 mb-6">
+        <div class="container mx-auto px-4 py-4">
+            <a href="../../index.html" class="text-2xl font-bold bg-gradient-to-r from-[#0EA5E9] to-[#EC4899] text-transparent bg-clip-text">GameVault</a>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="container mx-auto px-4 py-6">
+        <!-- 面包屑导航 -->
+        <div class="text-sm text-gray-400 mb-6">
+            <a href="../../index.html" class="hover:text-white transition-colors">Home</a> &gt; 
+            <a href="../driving/index.html" class="hover:text-white transition-colors">Driving</a> &gt; 
+            <span class="text-white">Super Star Car</span>
+        </div>
+
+        <!-- Game Title区域 -->
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[#0EA5E9] to-[#EC4899] text-transparent bg-clip-text">
+            Super Star Car
+        </h1>
+        
+        <p class="text-xl text-gray-300 mb-8">
+            Super Star Car is all about speed, precision, and strategy as you race through an exciting career mode. Every time you finish a race in this mode, you’ll earn stars and money, helping you climb the le...
+        </p>
+
+        <!-- 游戏标签 -->
+        <div class="flex flex-wrap gap-2 mb-8">
+            <span class="px-3 py-1 bg-[#0EA5E9]/20 rounded-full text-sm">Fully featured career mode</span>
+            <span class="px-3 py-1 bg-[#0EA5E9]/20 rounded-full text-sm">Several tracks to race on</span>
+            <span class="px-3 py-1 bg-[#0EA5E9]/20 rounded-full text-sm">Profile with detailed stats</span>
+            <span class="px-3 py-1 bg-[#0EA5E9]/20 rounded-full text-sm">In-car and 3rd-person views</span>
+            <span class="px-3 py-1 bg-[#0EA5E9]/20 rounded-full text-sm">Detailed 3D graphics</span>
+        </div>
+
+        <!-- 游戏容器 -->
+        <div class="bg-black/30 rounded-lg overflow-hidden mb-8">
+            <div class="aspect-video relative">
+                <iframe 
+                    src="https://www.crazygames.com/embed/super-star-car" 
+                    class="absolute inset-0 w-full h-full"
+                    frameborder="0"
+                    allow="gamepad *; fullscreen *; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen="true"
+                    webkitallowfullscreen="true" 
+                    mozallowfullscreen="true"
+                    title="Super Star Car - Play Online"
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- Game Description -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-black/20 backdrop-blur-md rounded-lg p-6 ring-1 ring-white/10">
+                <h2 class="text-2xl font-bold mb-4 bg-gradient-to-r from-[#0EA5E9] to-[#EC4899] text-transparent bg-clip-text">Game Description</h2>
+                <p class="text-gray-300">
+                    Super Star Car is all about speed, precision, and strategy as you race through an exciting career mode. Every time you finish a race in this mode, you’ll earn stars and money, helping you climb the leaderboard and unlock new opportunities. Use your winnings to upgrade your car strategically, boosting its performance and ensuring that every race feels fresh and thrilling.
+                </p>
+            </div>
+            <div class="bg-black/20 backdrop-blur-md rounded-lg p-6 ring-1 ring-white/10">
+                <h2 class="text-2xl font-bold mb-4 bg-gradient-to-r from-[#0EA5E9] to-[#EC4899] text-transparent bg-clip-text">Controls</h2>
+                <ul class="text-gray-300 space-y-2">
+                    <li>• W or up arrow: accelerate</li>
+                    <li>• AD or left and right arrow keys: steer</li>
+                    <li>• C: change camera view</li>
+                    <li>• Spacebar: respawn position</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚部分保持不变 -->
+</body>
+</html>
